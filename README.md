@@ -15,6 +15,7 @@ Gi en hands-on illustrasjon av «deep learning-revolusjonen» (med det fremste a
 - Bytt til Keras (for mindre skriving). Sett opp samme nett i Keras. Tren og test dette.
 - Forklar elementene i et CNN (på presentasjon)
 - Sett opp CNN i Keras, med moderne arkitektur. Tren og test dette.
+- Få hinsides gode resultater på Cifar10 ved å bruke DenseNet pre-trent på ImageNet
 - Fancy medisinsk anvendelse (`2.0-medisinsk.ipynb`).
 
 
