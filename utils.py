@@ -5,6 +5,11 @@ import pandas as pd
 from glob import glob
 import random
 import cv2
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.simplefilter(action='ignore', category=UserWarning)
+import h5py
+
 
 # PyTorch
 import torch
@@ -104,25 +109,25 @@ def get_data_dn121(img_rows=224, img_cols=224, classes=num_classes, cifar=True, 
     if cifar:
         (x_train, y_train), (x_test, y_test) = cifar10.load_data()
     if allData:
-        nb_train_samples = len(x_train)
-        nb_test_samples = len(x_test)
+        train_samples = len(x_train)+1
+        test_samples = len(x_test)+1
     if not allData:
-        nb_train_samples = 3000
-        nb_test_samples = 100
+        train_samples = 3000
+        test_samples = 100
         
-    x_train = np.array([cv2.resize(img, (img_rows,img_cols)) for img in x_train[:nb_train_samples,:,:,:]])
-    x_test = np.array([cv2.resize(img, (img_rows,img_cols)) for img in x_test[:nb_test_samples,:,:,:]])
-    y_train = keras.utils.to_categorical(y_train[:nb_train_samples], num_classes)
-    y_test = keras.utils.to_categorical(y_test[:nb_test_samples], num_classes)
+    x_train = np.array([cv2.resize(img, (img_rows,img_cols)) for img in x_train[:train_samples,:,:,:]])
+    x_test = np.array([cv2.resize(img, (img_rows,img_cols)) for img in x_test[:test_samples,:,:,:]])
+    y_train = keras.utils.to_categorical(y_train[:train_samples], num_classes)
+    y_test = keras.utils.to_categorical(y_test[:test_samples], num_classes)
 
     print(f'Lastet inn data, konverterte til størrelse egnet for DenseNet121')
-    if not allData: print("allData=False, så kun 3000 treningseksempler ble lastet inn")
+    if not allData: print(f'allData=False, så kun {train_samples} treningseksempler ble lastet inn')
     if allData: print(f'Lastet inn alle {len(x_train)} treningseksempler.')
     
     return (x_train, y_train), (x_test, y_test)
 
 
-def densenet121_model(img_rows=224, img_cols=224, color_type=3, nb_dense_block=4, growth_rate=32, nb_filter=64, reduction=0.5, dropout_rate=0.0, weight_decay=1e-4, num_classes=10):
+def densenet121_model(img_rows=224, img_cols=224, color_type=3, nb_dense_block=4, growth_rate=32, nb_filter=64, reduction=0.5, dropout_rate=0, weight_decay=1e-4, num_classes=10):
     '''
     Modifisert versjon av https://github.com/flyyufelix/cnn_finetune
     '''
@@ -295,7 +300,9 @@ def dense_block(x, stage, nb_layers, nb_filter, growth_rate, dropout_rate=None, 
 
 
 def densenet121_pretrained():
-    model = densenet121_model()
+    print("Laster inn pre-trent DenseNet121....")
+    model = densenet121_model(dropout_rate=0.2)
     model.load_weights('weights/dn121-cifar10.h5')
+    print("Modell lastet inn")
     return model
     
