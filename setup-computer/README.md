@@ -11,5 +11,5 @@ pip install git+https://www.github.com/keras-team/keras-contrib.git
 python -m ipykernel install --user --name mediacity --display-name "Mediacity"
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
-sudo apt install tmux htop emacs
+sudo apt install tmux htop emacs tree
 ```
