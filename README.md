@@ -6,7 +6,7 @@ https://docs.google.com/presentation/d/1MU8x40YDTuS_hb1EtB9bjphtICATznsvF70sWMws
 
 ## Filer
 - `1.0-neural_networks.ipynb`: Denne skal skrives fra skratch under workshopen. Versjonen som ligger her vil ikke bli brukt direkte. 
-- `2.0-medisinsk.ipynb`: Skal bruke en pre-made versjon av denne.
+- `2.0-medisinsk-bilder.ipynb`: Skal bruke en pre-made versjon av denne.
 - `utils.py`: Inneholder diverse ting som skal feies litt under teppet.
 
 
